@@ -52,6 +52,35 @@ module.exports = {
             .catch((err) => res.status(500).json(err));
     },
     // add reaction
-
+    addReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body } },
+            { runValidators: true, new: true }
+        )
+            .then((thought) =>
+                !thought
+                    ? res
+                        .status(404)
+                        .json({ message: 'No thought found with that Id' })
+                    : res.json(thought)
+            )
+            .catch((err) => res.status(500).json(err));
+    },
     // delete reaction
+    removeReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: { reactionsId: req.params.reactionsId } } },
+            { runValidators: true, new: true }
+        )
+            .then((thought) =>
+                !thought
+                    ? res
+                        .status(404)
+                        .json({ message: 'No thought found with that Id' })
+                    : res.json(thought)
+            )
+            .catch((err) => res.status(500).json(err));
+    }
 }   
