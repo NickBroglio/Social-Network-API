@@ -45,6 +45,15 @@ module.exports = {
     deleteUser(req, res) {
         User.findOneAndDelete({ _id: req.params.userId })
             .then((user) =>
+                // {
+                //     if (!user){
+                //         res.status(404).json({ message: 'No user with this Id!' })
+                //     }
+                //     User.find({ friends: req.params.userId })
+                //     .then( users => {
+                        
+                //     })
+                // }
                 !user
                     ? res.status(404).json({ message: 'No user with this ID!' })
                     : res.json(user)
@@ -55,7 +64,7 @@ module.exports = {
     addFriend(req, res) {
         User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $addToSet: { friends: req.body } },
+            { $addToSet: { friends: req.params.friendsId } },
             { runValidators: true, new: true }
         )
             .then((user) =>
@@ -71,7 +80,7 @@ module.exports = {
     removeFriend(req, res) {
         User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $pull: { friends: { friendsId: req.params.friendsId } } },
+            { $pull: { friends: req.params.friendsId } } ,
             { runValidators: true, new: true }
         )
             .then((user) =>

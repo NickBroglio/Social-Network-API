@@ -12,18 +12,19 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now(),
-            // getter function?????
         },
         username: {
             type: String,
             required: true,
         },
+        // reference the reaction schema
         reactions: [reactionSchema],
     },
     {
         toJSON: {
             getters: true,
         },
+        id: false
     }
 );
 

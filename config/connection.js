@@ -1,9 +1,9 @@
 const { connect, connection } = require('mongoose');
 
 
-// what database?
+// connects database to mongo db
 const connectionString = 
-    process.env.MONGODB_URI || 'mongodb://localhost:27017/';
+    process.env.MONGODB_URI || 'mongodb://localhost:27017/socialNetworkdb';
 
 connect(connectionString, {
     useNewUrlParser: true,
